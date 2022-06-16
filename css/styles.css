@@ -1,0 +1,25 @@
+body {
+    max-width: 800px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: aliceblue;
+    padding: 30px 30px;
+    font-size: 19px;
+    font-family: sans-serif;
+}
+
+section {
+    padding-top: 10px;
+}
+
+p {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+#title {
+    text-align: center;
+}

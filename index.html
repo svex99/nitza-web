@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <article>
+        <div id="title">
+            <h1>La Actualidad en la Cocina de Nitza</h1>
+        </div>
+
+        <summary id="intro">
+            <p>La cocina cubana es referente a nivel internacional. Las recetas típicas son ofrecidas en múltiples países como sinónimo de sabor. Aquí, en la Isla, es tradición su disfrute, ¿quién no ha comido en un fin de año carne de puerco con congrí? Pero en los últimos tiempos hemos visto desaparecer o inalcanzables para el bolsillo popular algunos productos fundamentales. En este artículo vamos a analizar un grupo considerables de recetas del libro <i>Cocina al Minuto</i>, de la cubana Nitza Villapol, y trataremos de estimar el precio de estas en la Cuba de hoy.</p>
+        </summary>
+        
+        <section id="nitza">
+            <p>Nitza ocupó un espacio bien merecido junto a Margot (su ayudante) en la televisión cubana. Su programa <i>Cocina al Minuto</i> fue emitido por 44 años, siendo recordado a día de hoy por varias generaciones que lo disfrutaron. Otros que no tuvieron la suerte de verlo en vivo conocen de ella, sus recetas y consejos, gracias a su libro homónimo que muchos atesoran y tienen como material de consulta para la cocina.</p>
+        </section>
+        
+        <section id="data-origin">
+            <p>Del libro, <i>Cocina al Minuto</i>, se extrajo un total de 234 recetas. Estas recetas son pertenecientes a diferentes categorías: aves, carne de res, cereales, ensaladas, pescados, postres, sopas, etc. Los datos de ellas fueron almacenados de forma digital para poder procesarlos de manera más sencilla.</p>
+
+            <div style="position: relative; bottom: 15px; top: 15px;">
+                <canvas id="cat-treemap" width="800" height="400"></canvas>
+            </div>
+        </section>
+        
+        <section id="data-aproach">
+            <p>Las recetas están conformadas por un grupo variado de ingredientes, algunos con dificultad para encontrarlos en los mercados cubanos. Otros no son comercializados en la red nacional, por lo que son más difícil o costosos de conseguir.</p>
+            
+            <div style="position: relative; top: 15px;">
+                <canvas id="ings-graph" width="900" height="800"></canvas>
+            </div>
+        </section>
+        
+        <section id="prices">
+            <p>Los precios son un tema delicado. Tenemos una oferta estatal o regulada por el estado con precios aceptables. Pero antes la ausencia de esta y la escasez muchos terminamos comprando "donde aparezca". Sucede en la actualidad que le preguntas a un cubano si algo está caro y obtienes la respuesta: "Ya no sé qué está caro, y qué no". La inflación, inestabilidad y desabastecimiento causan una volatilidad alta e incertidumbre en la compra de los alimentos. Creo que todos conocemos o vivimos la historia del aceite...</p>
+
+            <p>Las recetas de Nitza son muy variadas, tienen tanto ingredientes comunes como de otras latitudes. También, parte de los ingredientes empleados en sus recetas no son comercializados en puntos de venta por moneda nacional en la Isla. Esto trae como consecuencia el encarecimiento para los cubanos que son remunerados en esta moneda. Con un cambio informal superior a 90 CUP por 1 MLC, se reduce el salario promedio (3800 CUP aprox.) a no más de 40 USD. Mismo salario promedio que a penas sobrepasa el costo de la canasta básica.</p>
+
+            <p id="prices-text">Al evaluar el precio de cada receta se obtiene un costo promedio de avg-price CUP. Por otra parte la mediana es de med-price CUP, lo que indica que el 50% de las recetas tienen un costo estimado superior a este, mientras que la otra mitad inferior. En una hogar de cuatro personas, asumiendo el salario promedio de dos personas en edad laboral y descontando el costo de la canasta básica que puede ser variable, quedaría un monto aproximado de 5000 CUP para el mes. De aquí sabemos que todo no se puede dedicar a la alimentación porque hay muchas necesidades a parte de esta. Aunque se dedicara, sería difícil recrear los platos de Nitza para su disfrute en las diferentes comidas del día.</p>
+            
+            <div>
+                <canvas id="prices-histogram" width="800" height="400"></canvas>
+            </div>
+
+            <p>¿Pero que hay de las familias que viven de salarios mínimos (2100 CUP)? Ellos sin dudas se verán en una peor situación si desean preparar los platillos. Nitza cocinaba para todos y lo hizo durante tiempos de mucha necesidad y escasez, pero en la Cuba actual hay que jugar las cartas de forma distinta.</p>
+        </section>
+
+        <section id="predictor">
+        </section>
+    </article>
+
+    <script src="js/libs/echarts.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.7.0/sql-wasm.js" integrity="sha512-vHGg41kMMVrI90EIvUSlrqyE0AOAzHJOxWSMZrv0FkSCLrRsXxfmDrSM/7ms3jINzUROn5OWAlWp+xx0tVdakw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+    <script src="js/libs/sql-wasm.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        initDB().then(db => {
+            updateAvgAndMedianPrice(db);
+            renderCategoriesTreemap(db);
+            renderIngredientsGraph(db);
+            renderPricesHistogram(db);
+        })
+    </script>
+</body>
+</html>
