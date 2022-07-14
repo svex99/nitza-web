@@ -245,12 +245,56 @@ function renderPricesHistogram(db) {
         },
         series: [
             {
-                name: "ALGO",
                 type: "bar",
                 data: data.map(e => e.count),
             }
         ]
 
+    };
+
+    option && myChart.setOption(option);
+}
+
+function renderGroupPricesHistogram(db) {
+    let stmt = db.prepare(
+        `SELECT category, ROUND(AVG(price), 0)
+        FROM recipe
+        GROUP BY category`
+    )
+    let data = []
+    while (stmt.step()) {
+        let entry = stmt.get()
+        data.push({
+            name: `${entry[0]}\n(${entry[1]} CUP)`,
+            value: entry[1],
+            label: {
+                fontWeight: "bold"
+            }            
+        })
+    }
+
+    let chartDom = document.getElementById("prices-group");
+    let myChart = echarts.init(chartDom);
+    
+    let option = {
+        title: {
+            text: "Precio promedio para cada grupo de recetas",
+            left: "center",
+        },
+        name: "Grupos",
+        toolbox: {
+            show: true,
+            feature: {
+                saveAsImage: { show: true }
+            }
+        },
+        tooltip: {},
+        series: [
+            {
+                type: "treemap",
+                data: data
+            }
+        ]
     };
 
     option && myChart.setOption(option);
